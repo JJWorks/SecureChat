@@ -5,3 +5,5 @@
 /.vs
 /SecureChat.Core/bin/
 /SecureChat.Core/obj/
+/SecureChatWeb/obj
+/SecureChatWeb/bin/
