@@ -1,0 +1,9 @@
+C:\temp\SecureChat\JJWorks\SecureChat\SecureChat.Core\bin\Debug\netstandard2.0\SecureChat.Core.deps.json
+C:\temp\SecureChat\JJWorks\SecureChat\SecureChat.Core\bin\Debug\netstandard2.0\SecureChat.Core.dll
+C:\temp\SecureChat\JJWorks\SecureChat\SecureChat.Core\obj\Debug\netstandard2.0\SecureChat.Core.csprojAssemblyReference.cache
+C:\temp\SecureChat\JJWorks\SecureChat\SecureChat.Core\obj\Debug\netstandard2.0\SecureChat.Core.csproj.CoreCompileInputs.cache
+C:\temp\SecureChat\JJWorks\SecureChat\SecureChat.Core\obj\Debug\netstandard2.0\SecureChat.Core.AssemblyInfoInputs.cache
+C:\temp\SecureChat\JJWorks\SecureChat\SecureChat.Core\obj\Debug\netstandard2.0\SecureChat.Core.AssemblyInfo.cs
+C:\temp\SecureChat\JJWorks\SecureChat\SecureChat.Core\bin\Debug\netstandard2.0\SecureChat.Core.pdb
+C:\temp\SecureChat\JJWorks\SecureChat\SecureChat.Core\obj\Debug\netstandard2.0\SecureChat.Core.dll
+C:\temp\SecureChat\JJWorks\SecureChat\SecureChat.Core\obj\Debug\netstandard2.0\SecureChat.Core.pdb
