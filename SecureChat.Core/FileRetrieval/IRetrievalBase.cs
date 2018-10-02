@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SecureChat.Core.FileRetrieval
 {
-    interface IRetrievalBase
+    public interface IRetrievalBase
     {
         /// <summary>
         /// Gets the data from a file.

@@ -4,3 +4,4 @@
 
 /.vs
 /SecureChat.Core/bin/Debug/netstandard2.0
+/SecureChat.Core/obj
