@@ -6,6 +6,16 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Emotes\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SecureChat.Core\SecureChat.Core.csproj" />
   </ItemGroup>
 
 </Project>

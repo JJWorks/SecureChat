@@ -7,3 +7,4 @@
 /SecureChat.Core/obj/
 /SecureChatWeb/obj
 /SecureChatWeb/bin/
+*.user
