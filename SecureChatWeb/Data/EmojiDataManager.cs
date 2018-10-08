@@ -15,15 +15,20 @@ namespace SecureChatWeb.Data
     public class EmojiDataManager : BaseDataManager
     {
         /// <summary>
-        /// Hard Coded Value in Web.config.
+        /// Emoji look up in the configuration file.
         /// </summary>
         const string SectionName = "emojiData";
         
         /// <summary>
-        /// 
+        /// Creates an Instance of EmojiDataManager.
         /// </summary>
+        /// <param name="iconf">IConfiguration reference to the configuration file.</param>
         public EmojiDataManager(IConfiguration iconf) : base(SectionName, iconf) { }
 
+        /// <summary>
+        /// Gets all the Emojis.
+        /// </summary>
+        /// <returns>List of Emoji (class).</returns>
         public List<SecureChatWeb.Emoji.Emoji> GetAllEmoji()
         {
             return EmojiDataRetriever.Instance(this.MethodOfRetrieval, new CacheObject(SectionName, int.Parse(WCSM.GetSectionConfigValue("CacheLength")))).GetListofEmoji();

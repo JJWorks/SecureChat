@@ -17,12 +17,12 @@ namespace SecureChatWeb.Data
         /// Implements an Instance of BaseDataManager to retrieve Data.
         /// </summary>
         /// <param name="WebSection">Web.config Section to Use.</param>
-        /// <param name="UseCloud">Use Azure to pull data.</param>
+        /// <param name="iconfig">IConfiguration reference to the configuration file.</param>
         public BaseDataManager(string WebSection, IConfiguration iconfig)
         {
             config = iconfig;
             var UseCloud = bool.Parse(config.GetSection("appSettings").GetSection("UseCloud").Value);
-            WCSM = new WebConfigurationSectionManager(WebSection);
+            WCSM = new WebConfigurationSectionManager(WebSection, iconfig);
             if (UseCloud)
             {
                 MethodOfRetrieval = new AzureCloudFileRetrieval(config.GetSection("ConnectionStrings").GetSection("AzureLocation").Value, WCSM.GetSectionConfigValue("CloudShare"), WCSM.GetSectionConfigValue("CloudFile"));
@@ -34,7 +34,7 @@ namespace SecureChatWeb.Data
         }
 
         /// <summary>
-        /// Web.config simple factory object to retrieve data.
+        /// Web Configuration simple factory object to retrieve data.
         /// </summary>
         protected WebConfigurationSectionManager WCSM;
 
@@ -43,6 +43,6 @@ namespace SecureChatWeb.Data
         /// </summary>
         protected IRetrievalBase MethodOfRetrieval;
 
-        protected IConfiguration config;
+        private IConfiguration config;
     }
 }

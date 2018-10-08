@@ -8,7 +8,7 @@ using System.Collections.Specialized;
 namespace SecureChatWeb.Data
 {
     /// <summary>
-    /// Grabs Sections from Web.config.
+    /// Grabs Sections from the configuration.
     /// </summary>
     public class WebConfigurationSectionManager
     {
@@ -16,23 +16,24 @@ namespace SecureChatWeb.Data
         /// Implements WebConfigurationManager to Get Name Values of a section.
         /// </summary>
         /// <param name="SectionName">Section Name in Web.config.</param>
-        public WebConfigurationSectionManager(string SectionName)
+        /// <param name="_config">IConfiguration of the appsettings.</param>
+        public WebConfigurationSectionManager(string SectionName, IConfiguration _config)
         {
-            configValues = _config.GetSection(SectionName) as NameValueCollection;
+            configValues = _config.GetSection(SectionName)
+                    .GetChildren().ToDictionary(x => x.Key, x => x.Value);
         }
-
-        private IConfiguration _config;
+        
 
         /// <summary>
-        /// Name Value Collection From Web.config.
+        /// Dictionary Collection From Web.config.
         /// </summary>
-        private NameValueCollection configValues;
+        private IDictionary<string, string> configValues;
 
         /// <summary>
         /// Gets a value from the section.
         /// </summary>
-        /// <param name="Key">Key in web.config to retreive.</param>
-        /// <returns>The value in web.config.</returns>
+        /// <param name="Key">Key in configuration to retreive.</param>
+        /// <returns>The value in configuration.</returns>
         public string GetSectionConfigValue(string Key)
         {
             return configValues[Key];
