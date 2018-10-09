@@ -11,6 +11,7 @@ using System.Text.Encodings.Web;
 
 namespace SecureChatWeb.Emoji
 {
+    //Class needs to be eliminated/combined with Stored User and Injected Properly.
     
     /// <summary>
     /// EmojiDataRetriever and caches objects to reduce IO.
