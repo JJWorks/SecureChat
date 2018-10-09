@@ -17,7 +17,7 @@ namespace SecureChatWeb.CommunicationHub
 
         public chatHub(IConfiguration config) : base()
         {
-            SavedUserInfo = new StoredUserDataManager(config);
+      //      SavedUserInfo = new StoredUserDataManager(config);
             NumberOfSprites = config.GetSection("appsettings").GetValue<int>("NumberOfSprites");
         }
 
@@ -82,8 +82,8 @@ namespace SecureChatWeb.CommunicationHub
             var UTCSnap = DateTime.UtcNow;
             int ModnumtoUse = int.Parse(UserThatSent.Identifier) % NumberOfSprites;
 
-            await Clients.Caller.SendAsync("displayMessage", UserThatSent.Verified, true, UserThatSent.UserName, UTCSnap, ModnumtoUse);
-            await Clients.GroupExcept(lowerCaseChat, Context.ConnectionId).SendAsync("displayMessage", UserThatSent.Verified, false, UserThatSent.UserName, UTCSnap, ModnumtoUse);
+            await Clients.Caller.SendAsync("displayMessage", MessageToSend, UserThatSent.Verified, true, UserThatSent.UserName, UTCSnap, ModnumtoUse);
+            await Clients.GroupExcept(lowerCaseChat, Context.ConnectionId).SendAsync("displayMessage", MessageToSend, UserThatSent.Verified, false, UserThatSent.UserName, UTCSnap, ModnumtoUse);
             return 1;
         }
 
@@ -152,16 +152,16 @@ namespace SecureChatWeb.CommunicationHub
         private async Task<UserInfoBase> AddUsertoRoomAsync(string HashSumUser, string userName, string ChatRoom)
         {
             UserInformation currentUserInfo = null;
-            if (SavedUserInfo.HasData(HashSumUser))
-            {
-                StoredUser userInFile = SavedUserInfo.GetStoredUser(HashSumUser);
-                currentUserInfo = new UserInformation(Context.ConnectionId, userInFile.DisplayName, RandomNumberThread.Instance.Next(LowNumber, MaxNumber).ToString(), true);
+            //if (SavedUserInfo.HasData(HashSumUser))
+            //{
+            //    StoredUser userInFile = SavedUserInfo.GetStoredUser(HashSumUser);
+            //    currentUserInfo = new UserInformation(Context.ConnectionId, userInFile.DisplayName, RandomNumberThread.Instance.Next(LowNumber, MaxNumber).ToString(), true);
 
-            }
-            else
-            {
+            //}
+            //else
+            //{
                 currentUserInfo = new UserInformation(Context.ConnectionId, userName, RandomNumberThread.Instance.Next(LowNumber, MaxNumber).ToString(), false);
-            }
+            //}
             RoomToUsers[ChatRoom].Add(currentUserInfo);
             await Groups.AddToGroupAsync(Context.ConnectionId, ChatRoom);
             return currentUserInfo;

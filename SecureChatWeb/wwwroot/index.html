@@ -1,10 +1,86 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <title></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Secure Chat</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
+    <link rel="stylesheet" href="//cdn.materialdesignicons.com/2.8.94/css/materialdesignicons.min.css" crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="css/ChatStyle.min.css" />
+    <link rel="stylesheet" href="css/chat.min.css" />
+
+    <script src="//ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.8.3.js"></script>
 </head>
 <body>
-    sdgsfd
+    <!--[if lte IE 9]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <nav class="navbar navbar-inverse navbar-fixed-top start-hidden" role="navigation">
+        <div class="container">
+            <div id="navbar" class="navbar-left">
+                <form class="navbar-form navbar-right" role="form">
+                    <button id="buttonDisconnect" class="btn btn-danger" type="button">Disconnect</button>
+                </form>
+            </div>
+            <div id="speakerbutton" class="navbar-right speakerOn" title="Toggle Sound"></div>
+        </div>
+    </nav>
+
+    <div id="SignInContainer" class="container">
+        <form class="form-signin" id="formLogin">
+            <h2 class="form-signin-heading">Please sign in</h2>
+            <label for="inputUserName" class="sr-only">Name</label>
+            <input type="text" id="inputUserName" class="form-control" placeholder="Name" required autofocus>
+            <label for="inputChatRoom" class="sr-only">Chat Room</label>
+            <input type="text" id="inputChatRoom" class="form-control" placeholder="Chat Room" required>
+            <label for="inputPassword" class="sr-only">Chat Encryption Key</label>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Chat Encryption Key" required>
+            <label for="inputRePassword" class="sr-only">Re-Type Chat Encryption Key</label>
+            <input type="password" id="inputRePassword" class="form-control" placeholder="Re-Type Chat Encryption Key" oninput="ValidateFormKeyMatch(this)" required>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        </form>
+    </div>
+
+    <div id="divChat" class="start-hidden row">
+        <div class="col-lg-4 col-md-3 col-xs-1"></div>
+        <div class="col-lg-4 col-md-6 col-xs-10">
+            <div class="panel panel-names">
+                <!-- Members that are on the Chat -->
+                <ul id="ulChatUsers" class="list-group"></ul>
+            </div>
+            <div class="panel panel-default">
+                <!-- Posted Messages -->
+                <div class="panel-body" id="divChatMessages">
+                    <ul class="chat" id="ulChatPanel"></ul>
+                </div>
+            </div>
+            <div>
+                <!-- Chat form -->
+                <div class="form-group">
+                    <div id="MoreMessagesWarning" class="more-messages start-hidden">More Messages Below</div>
+                    <textarea class="form-control" rows="3" id="chatinput"></textarea>
+                    <button id="buttonSubmitChat" class="btn btn-success" type="button">Send</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-3 col-xs-1"></div>
+    </div>
+
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="Scripts/jquery-2.2.0.min.js"><\/script>')</script>
+    <script src="/lib/signalr/dist/browser/signalr.min.js"></script>
+    <script src="/Scripts/ServerCommunication.js"></script>
+
+    <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/aes.min.js" integrity="sha256-x4ioj4Ml0BqGJWXqHZVljtkzcsm1wHYSD71Boze2cks=" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js" integrity="sha384-uEKJZcjXxYuCnOPvqTQP6vj69jWPkWzo0YISzCKa0UKHGJp7QpcphU3tW4Whc/bZ" crossorigin="anonymous"></script>
+
+    <script src="js/main.min.js"></script>
+
 </body>
 </html>
