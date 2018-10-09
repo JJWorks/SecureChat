@@ -1,0 +1,199 @@
+﻿@mixin chatheightvariance($heightToUse) {
+    height: $heightToUse;
+}
+
+$desktopheight: 500px;
+$tabletheight: 300px;
+$phoneheight: 200px;
+
+
+
+$break-small: 320px;
+$break-large: 1024px;
+
+
+$validateIconColor: #FFFA43;
+
+
+@mixin respond-to($media) {
+    @if $media == handhelds {
+        @media only screen and (max-width: $break-small) {
+            @content;
+        }
+    }
+    @else if $media == medium-screens {
+        @media only screen and (min-width: $break-small + 1) and (max-width: $break-large - 1) {
+            @content;
+        }
+    }
+    @else if $media == wide-screens {
+        @media only screen and (min-width: $break-large) {
+            @content;
+        }
+    }
+}
+
+%spriteCommonCSS {
+    height: 50px;
+    width: 50px;
+    text-align: center;
+    position: relative;
+}
+
+$QuantityofSprites: 9;
+$linktoSpriteImage: "/img/sprites.png";
+
+@for $i from 0 through $QuantityofSprites {
+    .userNameSprite#{$i} {
+        @extend %spriteCommonCSS;
+        background: url($linktoSpriteImage) -50px * $i 0;
+    }
+}
+
+
+.fakeImageTes {
+    background: url(/img/sprites.png) 0 0;
+}
+
+%CommonTextInSprite {
+    font-size: 17px;
+    text-align: center;
+    top: 13px;
+    position: relative;
+}
+
+
+.CircleNameFont {
+    @extend %CommonTextInSprite;
+    font-weight: bold;
+}
+
+%CommonVerificationStyle {
+    color: $validateIconColor;
+    cursor: default;
+}
+
+
+.VerficationUserNameFont {
+    @extend %CommonVerificationStyle;
+}
+
+.VerifiedUserList {
+    @extend %CommonVerificationStyle;
+    font-size: 15px;
+    font-weight: bolder;
+}
+
+
+.chat {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+        border-bottom: 1px dotted #B3A9A9;
+
+        &.left {
+            .chat-body {
+                margin-left: 60px;
+            }
+        }
+
+        &.right {
+            .chat-body {
+                margin-right: 60px;
+            }
+        }
+
+        .chat-body {
+            p {
+                margin: 0;
+                color: #777777;
+            }
+        }
+    }
+}
+
+
+
+.panel .slidedown .glyphicon, .chat .glyphicon {
+    margin-right: 5px;
+}
+
+
+%scrollingExpandingDivs {
+    overflow-y: auto;
+}
+
+.panel-body {
+    overflow-y: scroll;
+    //    @include chatheightvariance($desktopheight);
+    @include respond-to(handhelds) {
+        @include chatheightvariance($phoneheight)
+    }
+
+    @include respond-to(medium-screens) {
+        @include chatheightvariance($tabletheight)
+    }
+
+    @include respond-to(wide-screens) {
+        @include chatheightvariance($desktopheight)
+    }
+}
+
+.panel-names {
+    @extend %scrollingExpandingDivs;
+
+    @include respond-to(handhelds) {
+        @include chatheightvariance(50px)
+    }
+
+    @include respond-to(medium-screens) {
+        @include chatheightvariance(100px)
+    }
+
+    @include respond-to(wide-screens) {
+        @include chatheightvariance(100px)
+    }
+}
+
+.more-messages {
+    display: block;
+    backface-visibility: hidden;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    //position: relative;
+    top: -50px;
+    text-align: center;
+    background-color: rgba(0,0,0,0.7);
+    left: 20%;
+    color: #fff;
+    padding: 5px 0;
+    transition: opacity .2s ease-in-out;
+    width: 200px;
+    border: double;
+}
+
+
+/*
+::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+}
+    */

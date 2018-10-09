@@ -8,3 +8,6 @@
 /SecureChatWeb/obj
 /SecureChatWeb/bin/
 *.user
+*.css
+/SecureChatWeb/compilerconfig.json
+/SecureChatWeb/compilerconfig.json.defaults
