@@ -7,14 +7,23 @@ using Microsoft.Extensions.Configuration;
 using SecureChatWeb.Data;
 using SecureChatWeb.UserProfile;
 using SecureChat.Core.Hash;
-using SecureChatWeb.StoredUserItems;
 using SecureChat.Core.Math;
+using Newtonsoft.Json;
 
 namespace SecureChatWeb.CommunicationHub
 {
+    public class jjj
+    {
+        public string UserName;
+        public bool Verified = false;
+    }
     public class chatHub : Hub
     {
 
+        /// <summary>
+        /// Creates an instance of chatHub.
+        /// </summary>
+        /// <param name="config">Configuration</param>
         public chatHub(IConfiguration config) : base()
         {
       //      SavedUserInfo = new StoredUserDataManager(config);
@@ -33,6 +42,11 @@ namespace SecureChatWeb.CommunicationHub
         private const string salt = "It\'s the Bee\'s Knees.  Jeeves555";
         private readonly int NumberofHashIterations = 36;
 
+        /// <summary>
+        /// Override Disconnect to remove users from rooms.
+        /// </summary>
+        /// <param name="exception">Exception.</param>
+        /// <returns>Task</returns>
         public override async Task OnDisconnectedAsync(Exception exception)
         {
             var RoomsLocated = RoomsConnectionIDisIn(Context.ConnectionId);
@@ -65,16 +79,24 @@ namespace SecureChatWeb.CommunicationHub
 
             var currentUserInfo = await AddUsertoRoomAsync(await HashUserNameAsync(userName), userName, lowerCaseChat);
 
-            await Clients.Caller.SendAsync("loadUsers", RoomToUsers[lowerCaseChat].Cast<UserInfoBase>().ToArray());
+            //Having trouble getting signalr automatically converting complex types.  Hence stringing things.
+            await Clients.Caller.SendAsync("loadUsers", JsonConvert.SerializeObject(RoomToUsers[lowerCaseChat].Cast<UserInfoBase>().ToArray()));
 
-            if(!isNewRoom)
+            if (!isNewRoom)
             {
-                await Clients.GroupExcept(lowerCaseChat, Context.ConnectionId).SendAsync("hubAddUser", (UserInfoBase)currentUserInfo);
+                await Clients.GroupExcept(lowerCaseChat, Context.ConnectionId).SendAsync("hubAddUser", JsonConvert.SerializeObject((UserInfoBase)currentUserInfo));
             }
             return 1;
         }
 
 
+
+        /// <summary>
+        /// Sends a Message to the Chat Room.
+        /// </summary>
+        /// <param name="ChatRoom">Chat Room to send a message to.</param>
+        /// <param name="MessageToSend">Message to send to the chat room.</param>
+        /// <returns>Dummy int for async purposes.</returns>
         public async Task<int> SendChat(string ChatRoom, string MessageToSend)
         {
             var lowerCaseChat = ChatRoom.ToLower();
@@ -94,6 +116,7 @@ namespace SecureChatWeb.CommunicationHub
         /// </summary>
         /// <param name="ConnectionIDtoRemove">ConnectionID to Remove from the chatroom.</param>
         /// <param name="Chatroom">Chatroom to remove the connectionID from.</param>
+        /// <returns>Dummy int for async purposes.</returns>
         private async Task<int> ForceDisconnect(string ConnectionIDtoRemove, string Chatroom = null)
         {
             IList<string> RoomsLocated = new List<string>();
@@ -126,7 +149,11 @@ namespace SecureChatWeb.CommunicationHub
             return 0;
         }
 
-
+        /// <summary>
+        /// Finds the list of rooms a connectionID is connected to.
+        /// </summary>
+        /// <param name="ConnectionID">Connection ID</param>
+        /// <returns>IList of rooms user is in.</returns>
         private IList<string> RoomsConnectionIDisIn(string ConnectionID)
         {
             var RoomsLocated = new List<string>();
@@ -167,12 +194,22 @@ namespace SecureChatWeb.CommunicationHub
             return currentUserInfo;
         }
 
-
+        /// <summary>
+        /// Async Running of Hashing users.
+        /// </summary>
+        /// <param name="UserName">UserName to Hash.</param>
+        /// <returns>String of the Hash</returns>
         private Task<string> HashUserNameAsync(string UserName)
         {
             return Task.Run<string>(() => HashUserName(UserName));
         }
 
+        /// <summary>
+        /// Hashes a username.
+        /// </summary>
+        /// <param name="UserName">UserName to Hash.</param>
+        /// <returns>Hashsun of username</returns>
+        /// <remarks>If you are using this for a website authentication, please note.  This is made to be easy to log into and have a cool icon.</remarks>
         private string HashUserName(string UserName)
         {
             string HashedUserName = UserName + salt;

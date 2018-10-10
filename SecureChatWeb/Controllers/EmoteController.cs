@@ -13,6 +13,10 @@ namespace SecureChatWeb.Controllers
     [ApiController]
     public class EmoteController : ControllerBase
     {
+        /// <summary>
+        /// Creates an instance of Emotecontroller.
+        /// </summary>
+        /// <param name="iconfiguration"></param>
         public EmoteController(IConfiguration iconfiguration)
         {
             _config = iconfiguration;
@@ -20,7 +24,10 @@ namespace SecureChatWeb.Controllers
 
         private IConfiguration _config;
 
-        // GET api/values
+        /// <summary>
+        /// Get API.  Gets all Emojis
+        /// </summary>
+        /// <returns>A Collection of Emoji.</returns>
         [HttpGet]
         public ActionResult<IEnumerable<Emoji.Emoji>> Get()
         {
