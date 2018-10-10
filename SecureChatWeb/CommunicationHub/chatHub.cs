@@ -9,6 +9,7 @@ using SecureChatWeb.UserProfile;
 using SecureChat.Core.Hash;
 using SecureChat.Core.Math;
 using Newtonsoft.Json;
+using SecureChatWeb.StoredUserItems;
 
 namespace SecureChatWeb.CommunicationHub
 {
@@ -26,7 +27,7 @@ namespace SecureChatWeb.CommunicationHub
         /// <param name="config">Configuration</param>
         public chatHub(IConfiguration config) : base()
         {
-      //      SavedUserInfo = new StoredUserDataManager(config);
+            SavedUserInfo = new StoredUserDataManager(config);
             NumberOfSprites = config.GetSection("appsettings").GetValue<int>("NumberOfSprites");
         }
 
@@ -179,16 +180,16 @@ namespace SecureChatWeb.CommunicationHub
         private async Task<UserInfoBase> AddUsertoRoomAsync(string HashSumUser, string userName, string ChatRoom)
         {
             UserInformation currentUserInfo = null;
-            //if (SavedUserInfo.HasData(HashSumUser))
-            //{
-            //    StoredUser userInFile = SavedUserInfo.GetStoredUser(HashSumUser);
-            //    currentUserInfo = new UserInformation(Context.ConnectionId, userInFile.DisplayName, RandomNumberThread.Instance.Next(LowNumber, MaxNumber).ToString(), true);
+            if (SavedUserInfo.HasData(HashSumUser))
+            {
+                StoredUser userInFile = SavedUserInfo.GetStoredUser(HashSumUser);
+                currentUserInfo = new UserInformation(Context.ConnectionId, userInFile.DisplayName, RandomNumberThread.Instance.Next(LowNumber, MaxNumber).ToString(), true);
 
-            //}
-            //else
-            //{
+            }
+            else
+            {
                 currentUserInfo = new UserInformation(Context.ConnectionId, userName, RandomNumberThread.Instance.Next(LowNumber, MaxNumber).ToString(), false);
-            //}
+            }
             RoomToUsers[ChatRoom].Add(currentUserInfo);
             await Groups.AddToGroupAsync(Context.ConnectionId, ChatRoom);
             return currentUserInfo;

@@ -39,7 +39,7 @@ $('#buttonDisconnect').click(function () {
     $("#divChat").hide();
     $("#SignInContainer").show();
     document.title = OriginalTitle;
-    connection.hub.stop();
+    connection.stop();
     //$("#chatinput").unbind();
     return false;
 });
