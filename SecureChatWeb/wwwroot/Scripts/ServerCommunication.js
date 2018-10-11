@@ -161,7 +161,7 @@ function ValidateFormKeyMatch(input) {
 
 connection.on("displayMessage", (chatmessage, verification, isYou, userName, utcTime, spriteNumber) => {
     var stylestoUse = null;
-    var localtime = moment(utcTime + " UTC");
+    var localtime = moment(utcTime);
     var HTMLUserString;
     var VerificationHTMLUserString = !verification ? userName : "<span class=\"mdi mdi-crown VerficationUserNameFont\" title=\"Verified\"></span> " + userName;
     if (isYou) {

@@ -25,7 +25,7 @@ namespace SecureChatWeb.Data
             WCSM = new WebConfigurationSectionManager(WebSection, iconfig);
             if (UseCloud)
             {
-                MethodOfRetrieval = new AzureCloudFileRetrieval(config.GetSection("ConnectionStrings").GetSection("AzureLocation").Value, WCSM.GetSectionConfigValue("CloudShare"), WCSM.GetSectionConfigValue("CloudFile"));
+                MethodOfRetrieval = new AzureCloudFileRetrieval(config.GetSection("ConnectionStrings").GetValue<string>("AzureLocation"), WCSM.GetSectionConfigValue("CloudShare"), WCSM.GetSectionConfigValue("CloudFile"));
             }
             else
             {
