@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Emotes\" />
+    <Folder Include="wwwroot\lib\bootstrap\" />
   </ItemGroup>
 
   <ItemGroup>
