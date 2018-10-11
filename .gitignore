@@ -11,3 +11,5 @@
 /SecureChatWeb/wwwroot/css/*.css
 /SecureChatWeb/compilerconfig.json
 /SecureChatWeb/compilerconfig.json.defaults
+/SecureChatWeb/Properties/PublishProfiles
+/SecureChatWeb/wwwroot/Emotes/*
