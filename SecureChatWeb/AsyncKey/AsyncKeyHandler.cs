@@ -61,12 +61,17 @@ namespace SecureChatWeb.AsyncKey
         private IDictionary<string, RoomKeys> RoomConnectionKeys;
 
 
-        public void AddKey(string Room, string Public)
+        public void AddRoom(string Room)
         {
             if (!RoomConnectionKeys.ContainsKey(Room))
             {
                 RoomConnectionKeys.Add(Room, new RoomKeys());
             }
+        }
+
+        public void AddKey(string Room, string Public)
+        {
+            AddRoom(Room);
 
             if (!RoomConnectionKeys[Room].ContainsKey(Public))
                 RoomConnectionKeys[Room].AddKey(Public);

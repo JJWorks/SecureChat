@@ -14,5 +14,7 @@ namespace SecureChatWeb.AsyncKey
 
         string[] GetPublicKeys(string Room);
 
+        void AddRoom(string Room);
+
     }
 }
