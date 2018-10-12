@@ -29,7 +29,7 @@ namespace SecureChatWeb.Controllers
         /// </summary>
         /// <returns>A Collection of Emoji.</returns>
         [HttpGet]
-        public ActionResult<IEnumerable<Emoji.Emoji>> Get()
+        public IEnumerable<Emoji.Emoji> Get()
         {
             var EDM = new EmojiDataManager(_config);
             return EDM.GetAllEmoji();

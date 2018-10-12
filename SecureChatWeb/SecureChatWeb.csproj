@@ -2,10 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <UserSecretsId>ab89ba9c-3f91-48e4-a236-e2b13a8e5653</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <Content Remove="compilerconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="AsyncKey\AsyncKeyHandler.cs" />
+    <Content Include="AsyncKey\IKeyHandler.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -15,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\Emotes\" />
     <Folder Include="wwwroot\lib\bootstrap\" />
   </ItemGroup>
 
