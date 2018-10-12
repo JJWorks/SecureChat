@@ -12,10 +12,7 @@ namespace SecureChatWeb.Controllers
     [ApiController]
     public class KeyController : ControllerBase
     {
-        /// <summary>
-        /// Creates an instance of Emotecontroller.
-        /// </summary>
-        /// <param name="iconfiguration"></param>
+        
         public KeyController(IKeyHandler KeyHandles)
         {
             _KeyHandles = KeyHandles;
@@ -23,28 +20,41 @@ namespace SecureChatWeb.Controllers
 
         private IKeyHandler _KeyHandles;
 
+        [HttpGet]
+        public string Get()
+        {
+            return string.Empty;
+        }
 
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("GetAllKeys/{Room}", Name = "Get")]
         public IEnumerable<string> Get(string Room)
         {
-            _KeyHandles.GetPublicKeys("", "");
             return _KeyHandles.GetPublicKeys(Room);
         }
 
+        //[Route("Keys/{Room:string}")]
+        //public IEnumerable<string> GetAllKeys(string Room)
+        //{
+        //    return _KeyHandles.GetPublicKeys(Room);
+        //}
 
-
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpGet("AddKey/{Room}/{PublicKey}")]
+        public string AddKey(string Room, string PublicKey)
         {
-            _KeyHandles.AddKey("", "", "");
+            _KeyHandles.AddKey(Room, PublicKey);
+            return "add";
         }
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(string id)
+
+        [HttpGet("DeleteKey/{Room}/{PublicKey}")]
+        public string DeleteKey(string Room, string PublicKey)
         {
-            _KeyHandles.RemoveKey("", "");
+            _KeyHandles.RemoveKey(Room, PublicKey);
+            return "delete";
         }
+
+
+        
 
     }
 }

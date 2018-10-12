@@ -8,13 +8,11 @@ namespace SecureChatWeb.AsyncKey
     public interface IKeyHandler
     {
 
-        void AddKey(string Room, string ConnectionID, string Public);
+        void AddKey(string Room, string Public);
 
-        string RemoveKey(string Room, string ConnectionID);
+        void RemoveKey(string Room, string PublicKey);
 
         string[] GetPublicKeys(string Room);
 
-
-        string GetPublicKeys(string Room, string ConnectionID);
     }
 }

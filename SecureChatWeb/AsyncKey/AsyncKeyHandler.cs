@@ -10,62 +10,88 @@ namespace SecureChatWeb.AsyncKey
     /// </summary>
     public class AsyncKeyHandler : IKeyHandler
     {
-        public AsyncKeyHandler() => RoomConnectionKeys = new Dictionary<string, Dictionary<string, string>>();
-
-        private IDictionary<string, Dictionary<string, string>> RoomConnectionKeys;
-
-
-        public void AddKey(string Room, string ConnectionID, string Public)
+        internal class RoomKeys
         {
-            if(!RoomConnectionKeys.Keys.Contains(Room))
+            public RoomKeys()
             {
-                RoomConnectionKeys.Add(Room, new Dictionary<string, string>());
+                PublicKeys = new List<string>();
             }
-            var TheReference = RoomConnectionKeys[Room];
 
-            if (TheReference.Keys.Contains(ConnectionID))
-                TheReference.Remove(ConnectionID);
-            TheReference.Add(ConnectionID, Public);
+
+            public int Count
+            {
+                get { return PublicKeys.Count; }
+            }
+
+            public void AddKey(string _newKey)
+            {
+                if(!PublicKeys.Contains(_newKey))
+                {
+                    PublicKeys.Add(_newKey);
+                }
+            }
+
+            public void RemoveKey(string _remove)
+            {
+                if (PublicKeys.Contains(_remove))
+                {
+                    PublicKeys.Remove(_remove);
+                }
+            }
+
+            public bool ContainsKey(string _key)
+            {
+                return PublicKeys.Contains(_key);
+            }
+
+            public string[] GetAllKeys()
+            {
+                return PublicKeys.ToArray<string>();
+            }
+
+
+            private IList<string> PublicKeys;
         }
 
-        public string RemoveKey(string Room, string ConnectionID)
+        public AsyncKeyHandler()
         {
-            string PublicKeytoRemove = string.Empty;
-            if (RoomConnectionKeys.Keys.Contains(Room))
+            RoomConnectionKeys = new Dictionary<string, RoomKeys>();
+        }
+
+        private IDictionary<string, RoomKeys> RoomConnectionKeys;
+
+
+        public void AddKey(string Room, string Public)
+        {
+            if (!RoomConnectionKeys.ContainsKey(Room))
             {
-                var TheReference = RoomConnectionKeys[Room];
-                if (TheReference.Keys.Contains(ConnectionID))
+                RoomConnectionKeys.Add(Room, new RoomKeys());
+            }
+
+            if (!RoomConnectionKeys[Room].ContainsKey(Public))
+                RoomConnectionKeys[Room].AddKey(Public);
+        }
+
+        public void RemoveKey(string Room, string PublicKey)
+        {
+            if (RoomConnectionKeys.ContainsKey(Room))
+            {
+                if(RoomConnectionKeys[Room].ContainsKey(PublicKey))
                 {
-                    PublicKeytoRemove = TheReference[ConnectionID];
-                    TheReference.Remove(ConnectionID);
+                    RoomConnectionKeys[Room].RemoveKey(PublicKey);
                 }
-                if (TheReference.Count <= 0)
+                
+                if (RoomConnectionKeys[Room].Count <= 0)
                     RoomConnectionKeys.Remove(Room);
             }
-            return PublicKeytoRemove;
         }
 
         public string[] GetPublicKeys(string Room)
         {
-            if (!RoomConnectionKeys.Keys.Contains(Room))
+            if (!RoomConnectionKeys.ContainsKey(Room))
                 return new string[] { };
 
-            return RoomConnectionKeys[Room].Values.ToArray<string>();
-        }
-
-
-        public string GetPublicKeys(string Room, string ConnectionID)
-        {
-            string KeytoFind = string.Empty;
-            if (RoomConnectionKeys.Keys.Contains(Room))
-            {
-                var TheReference = RoomConnectionKeys[Room];
-                if (TheReference.Keys.Contains(ConnectionID))
-                {
-                    KeytoFind = TheReference[ConnectionID];
-                }
-            }
-            return KeytoFind;
+            return RoomConnectionKeys[Room].GetAllKeys();
         }
 
 

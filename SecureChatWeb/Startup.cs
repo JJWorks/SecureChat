@@ -66,6 +66,7 @@ namespace SecureChatWeb
             //app.UseFileServer();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseFileServer();
             app.UseCookiePolicy();
             app.UseMvc(routes =>
             {
@@ -74,10 +75,6 @@ namespace SecureChatWeb
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            //app.Run(async (context) =>
-            //{
-            //    await context.Response.WriteAsync("Hello World!");
-            //});
         }
     }
 }
