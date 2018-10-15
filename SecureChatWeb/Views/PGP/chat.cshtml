@@ -16,9 +16,9 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" />
     <link rel="stylesheet" href="//cdn.materialdesignicons.com/2.8.94/css/materialdesignicons.min.css" crossorigin="anonymous" />
 
-    <link rel="stylesheet" href="css/ChatStyle.min.css" />
-    <link rel="stylesheet" href="css/chat.min.css" />
-
+    <link rel="stylesheet" href="/css/ChatStyle.min.css" />
+    <link rel="stylesheet" href="/css/chat.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/openpgp/4.1.1/openpgp.min.js" integrity="sha256-cCbXCXFtmfUAZQw8wsd+SZiMWO7IazAKby86lZZNQ0o=" crossorigin="anonymous"></script>
     <script src="//ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.8.3.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -35,18 +35,26 @@
             <div id="speakerbutton" class="navbar-right speakerOn" title="Toggle Sound"></div>
         </div>
     </nav>
+    <input type="hidden" id="inputChatRoom" value="@ViewData["RoomNumber"]" />
+    <input type="hidden" id="inputPassword" />
+    <script>
+        function guid() {
+            function s4() {
+                return Math.floor((1 + Math.random()) * 0x10000)
+                    .toString(16)
+                    .substring(1);
+            }
+            return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+        };
 
+        document.getElementById("inputPassword").value = guid();
+    </script>
     <div id="SignInContainer" class="container">
         <form class="form-signin" id="formLogin">
             <h2 class="form-signin-heading">Please sign in</h2>
             <label for="inputUserName" class="sr-only">Name</label>
             <input type="text" id="inputUserName" class="form-control" placeholder="Name" required autofocus>
-            <label for="inputChatRoom" class="sr-only">Chat Room</label>
-            <input type="text" id="inputChatRoom" class="form-control" placeholder="Chat Room" required>
-            <label for="inputPassword" class="sr-only">Chat Encryption Key</label>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Chat Encryption Key" required>
-            <label for="inputRePassword" class="sr-only">Re-Type Chat Encryption Key</label>
-            <input type="password" id="inputRePassword" class="form-control" placeholder="Re-Type Chat Encryption Key" oninput="ValidateFormKeyMatch(this)" required>
+
             <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
         </form>
     </div>
@@ -82,7 +90,8 @@
     <script src="/lib/signalr/dist/browser/signalr.min.js"></script>
     <script src="/Scripts/ServerCommunication.js"></script>
     <script src="/Scripts/SecureChatWeb-UI.js"></script>
-
+    <script src="~/Scripts/EncryptDecrypt.js"></script>
+    
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js" integrity="sha256-u6BamZiW5tCemje2nrteKC2KoLIKX9lKPSpvCkOhamw=" crossorigin="anonymous"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js" integrity="sha256-CutOzxCRucUsn6C6TcEYsauvvYilEniTXldPa6/wu0k=" crossorigin="anonymous"></script>

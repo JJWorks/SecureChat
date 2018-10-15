@@ -63,10 +63,9 @@ namespace SecureChatWeb
                 routes.MapHub<chatHub>("/chatHub");
             });
             
-            //app.UseFileServer();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseFileServer();
+            //app.UseFileServer();
             app.UseCookiePolicy();
             app.UseMvc(routes =>
             {
